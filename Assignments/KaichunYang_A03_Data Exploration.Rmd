@@ -1,6 +1,6 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: "Kaichun Yang"
 output: pdf_document
 geometry: margin=2.54cm
 ---
