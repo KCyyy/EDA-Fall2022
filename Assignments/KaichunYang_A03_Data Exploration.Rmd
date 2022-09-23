@@ -25,6 +25,15 @@ The completed exercise is due on Sept 30th.
 1.  Check your working directory, load necessary packages (tidyverse), and upload two datasets: the ECOTOX neonicotinoid dataset (ECOTOX_Neonicotinoids_Insects_raw.csv) and the Niwot Ridge NEON dataset for litter and woody debris (NEON_NIWO_Litter_massdata_2018-08_raw.csv). Name these datasets "Neonics" and "Litter", respectively. Be sure to include the subcommand to read strings in as factors.
 
 ```{r,  message = FALSE}
+# Load packages
+
+library(dplyr) 
+library(ggplot2)
+library(tidyverse) 
+
+# Load dataset
+Neonics <- read.csv(file = 'E:/EDA-Fall2022/Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv')
+Litter <- read.csv(file = 'E:/EDA-Fall2022/Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv')
 
 ```
 
@@ -51,11 +60,13 @@ The completed exercise is due on Sept 30th.
 
 ```{r}
 
+
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest?
 
 ```{r}
+
 
 ```
 
@@ -65,6 +76,7 @@ The completed exercise is due on Sept 30th.
 
 ```{r}
 
+
 ```
 
 > Answer:
@@ -72,6 +84,7 @@ The completed exercise is due on Sept 30th.
 8.  Concentrations are always a numeric value. What is the class of Conc.1..Author. in the dataset, and why is it not numeric?
 
 ```{r}
+
 
 ```
 
@@ -83,11 +96,13 @@ The completed exercise is due on Sept 30th.
 
 ```{r}
 
+
 ```
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
 
 ```{r}
+
 
 ```
 
@@ -99,6 +114,7 @@ Interpret this graph. What are the most common test locations, and do they diffe
 
 ```{r}
 
+
 ```
 
 > Answer:
@@ -109,11 +125,13 @@ Interpret this graph. What are the most common test locations, and do they diffe
 
 ```{r}
 
+
 ```
 
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
 ```{r}
+
 
 ```
 
@@ -123,11 +141,13 @@ Interpret this graph. What are the most common test locations, and do they diffe
 
 ```{r}
 
+
 ```
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
 ```{r}
+
 
 ```
 
