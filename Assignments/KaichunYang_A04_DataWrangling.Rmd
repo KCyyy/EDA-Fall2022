@@ -9,8 +9,8 @@ geometry: margin=2.54cm
 #This code chunk will tidy your knit PDF files, wrapping long code lines
 #For it to work, the "formatR" package needs to be installed
 
-#install.packages('formatR')
-knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
+install.packages('formatR')
+#knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 ```
 
 ## OVERVIEW
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 This exercise accompanies the lessons in Environmental Data Analytics on Data Wrangling 
 
 ## Directions
-1.  Rename this file `<FirstLast>_A03_DataExploration.Rmd` (replacing `<FirstLast>` with your first and last name).
+1. Rename this file `<FirstLast>_A03_DataExploration.Rmd` (replacing `<FirstLast>` with your first and last name).
 2. Change "Student Name" on line 3 (above) with your name.
 3. Work through the steps, **creating code and output** that fulfill each instruction.
 4. Be sure to **answer the questions** in this assignment document.
@@ -28,13 +28,31 @@ The completed exercise is due on Friday, Oct7th @ 5:00pm.
 
 ## Set up your session 
 1. Check your working directory, load the `tidyverse` and `lubridate` packages, and upload all four raw data files associated with the EPA Air dataset, being sure to set string columns to be read in a factors. See the README file for the EPA air datasets for more information (especially if you have not worked with air quality data previously). 
+```{r}
+library(tidyverse)
+library(lubridate)
+EPA_03_2018 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_raw.csv')
+EPA_03_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_raw.csv')
+EPA_PM25_2018 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2018_raw.csv')
+EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw.csv')
+
+#bulk read?
+#bulk convert to factor?
+```
 
 2. Explore the dimensions, column names, and structure of the datasets. 
 
 ```{r, message = FALSE}
 #1
+summary(EPA_03_2018)
+summary(EPA_03_2019)
+summary(EPA_PM25_2018)
+summary(EPA_PM25_2019)
+
+#structure of dataset?
 
 #2
+#?
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -45,12 +63,26 @@ The completed exercise is due on Friday, Oct7th @ 5:00pm.
 
 ```{r}
 #3
+EPA_03_2018$Date <- as.Date(EPA_03_2018$Date) 
+EPA_03_2019$Date <- as.Date(EPA_03_2019$Date) 
+EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date) 
+EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date) 
 
 #4
+EPA_03_2018_S <- select(EPA_03_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA_03_2019_S <- select(EPA_03_2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA_PM25_2018_s <- select(EPA_PM25_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA_PM25_2019_s <- select(EPA_PM25_2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
 #5
+EPA_PM25_2018_s$AQS_PARAMETER_DESC <- 'PM2.5' 
+EPA_PM25_2019_s$AQS_PARAMETER_DESC <- 'PM2.5' 
 
 #6
+write.csv(EPA_03_2018_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_processed.csv")
+write.csv(EPA_03_2019_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_processed.csv")
+write.csv(EPA_PM25_2018_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2018_processed.csv")
+write.csv(EPA_PM25_2019_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_processed.csv")
 
 ```
 
