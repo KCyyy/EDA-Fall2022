@@ -44,10 +44,10 @@ EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw
 
 ```{r, message = FALSE}
 #1
-summary(EPA_03_2018)
-summary(EPA_03_2019)
-summary(EPA_PM25_2018)
-summary(EPA_PM25_2019)
+# summary(EPA_03_2018)
+# summary(EPA_03_2019)
+# summary(EPA_PM25_2018)
+# summary(EPA_PM25_2019)
 
 #structure of dataset?
 
@@ -63,10 +63,10 @@ summary(EPA_PM25_2019)
 
 ```{r}
 #3
-EPA_03_2018$Date <- as.Date(EPA_03_2018$Date) 
-EPA_03_2019$Date <- as.Date(EPA_03_2019$Date) 
-EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date) 
-EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date) 
+EPA_03_2018$Date <- as.Date(EPA_03_2018$Date, "%m/%d/%y") 
+EPA_03_2019$Date <- as.Date(EPA_03_2019$Date, "%m/%d/%y") 
+EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date, "%m/%d/%y") 
+EPA_PM25_2019$Date <- as.Date(EPA_PM25_2019$Date, "%m/%d/%y") 
 
 #4
 EPA_03_2018_S <- select(EPA_03_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
@@ -92,18 +92,59 @@ write.csv(EPA_PM25_2019_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/E
 8. Wrangle your new dataset with a pipe function (%>%) so that it fills the following conditions: 
 
 * Include all sites that the four data frames have in common: "Linville Falls", "Durham Armory", "Leggett", "Hattie Avenue", "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", "West Johnston Co.", "Garinger High School", "Castle Hayne", "Pitt Agri. Center", "Bryson City", "Millbrook School" (the function `intersect` can figure out common factor levels)
+
 * Some sites have multiple measurements per day. Use the split-apply-combine strategy to generate daily means: group by date, site, aqs parameter, and county. Take the mean of the AQI value, latitude, and longitude.
+  
 * Add columns for "Month" and "Year" by parsing your "Date" column (hint: `lubridate` package)
 * Hint: the dimensions of this dataset should be 14,752 x 9.
 
 9. Spread your datasets such that AQI values for ozone and PM2.5 are in separate columns. Each location on a specific date should now occupy only one row.
 10. Call up the dimensions of your new tidy dataset.
-11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1718_Processed.csv"
+11. Save your processed dataset with the following file name: "`EPAair_O3_PM25_NC1718_Processed.csv`    "
 
 ```{r}
-#7
+#intersect figure out common factor level
 
-#8
+library(dplyr)
+library(lubridate)
+
+
+
+#7
+EPA_data <- 
+  rbind(EPA_03_2018_S, EPA_03_2019_S, EPA_PM25_2018_s, EPA_PM25_2019_s)
+
+#8 
+EPA_data_2 <- 
+  EPA_data %>% 
+  filter(Site.Name == 'Linville Falls' | Site.Name == "Durham Armory" | Site.Name == "Leggett" | Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle" | Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain" | Site.Name == "West Johnston Co." | Site.Name == "Garinger High School" | Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center" | Site.Name == "Bryson City" | Site.Name == "Millbrook School") %>% 
+  group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>% 
+  summarise(meanaqi = mean(DAILY_AQI_VALUE), 
+            meanlat = mean(SITE_LATITUDE), 
+            meanlog = mean(SITE_LONGITUDE), 
+            .groups = "keep")
+ print(EPA_data_2)
+ 
+  #mutate(EPA_data_2, Year = year(EPA_data_2$Date), Month = month(EPA_data_2$Date)) %>%
+  print(EPA_data_2)
+
+EPA_data_3 <- EPA_data_2
+
+
+  filter(!is.na(DAILY_AQI_VALUE) & !is.na(SITE_LATITUDE) & !is.na(SITE_LONGITUDE))
+  summarise(meanaqi = mean(DAILY_AQI_VALUE), 
+            meanlat = mean(SITE_LATITUDE), 
+            meanlog = mean(SITE_LONGITUDE), 
+            )
+
+#
+
+
+
+
+#? common factor levels?
+
+
 
 #9
 
