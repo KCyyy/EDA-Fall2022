@@ -39,11 +39,9 @@ EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw
 
 2. Explore the dimensions, column names, and structure of the datasets. 
 
-```{r,warning = FALSE, message = FALSE}
-summary(EPA_O3_2018)
-summary(EPA_O3_2019)
-summary(EPA_PM25_2018)
-summary(EPA_PM25_2019)
+```{r, message = FALSE}
+#2
+
 ```
 
 ## Wrangle individual datasets to create processed files.
