@@ -1,6 +1,6 @@
 ---
 title: "Assignment 4: Data Wrangling"
-author: ""Kaichun Yang
+author: Kaichun Yang
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -9,8 +9,7 @@ geometry: margin=2.54cm
 #This code chunk will tidy your knit PDF files, wrapping long code lines
 #For it to work, the "formatR" package needs to be installed
 
-install.packages('formatR')
-#knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE, echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 ## OVERVIEW
@@ -29,30 +28,22 @@ The completed exercise is due on Friday, Oct7th @ 5:00pm.
 ## Set up your session 
 1. Check your working directory, load the `tidyverse` and `lubridate` packages, and upload all four raw data files associated with the EPA Air dataset, being sure to set string columns to be read in a factors. See the README file for the EPA air datasets for more information (especially if you have not worked with air quality data previously). 
 ```{r}
+#1
 library(tidyverse)
 library(lubridate)
-EPA_03_2018 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_raw.csv')
-EPA_03_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_raw.csv')
+EPA_O3_2018 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_raw.csv')
+EPA_O3_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_raw.csv')
 EPA_PM25_2018 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2018_raw.csv')
 EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw.csv')
-
-#bulk read?
-#bulk convert to factor?
 ```
 
 2. Explore the dimensions, column names, and structure of the datasets. 
 
-```{r, message = FALSE}
-#1
-# summary(EPA_03_2018)
-# summary(EPA_03_2019)
-# summary(EPA_PM25_2018)
-# summary(EPA_PM25_2019)
-
-#structure of dataset?
-
-#2
-#?
+```{r,warning = FALSE, message = FALSE}
+summary(EPA_O3_2018)
+summary(EPA_O3_2019)
+summary(EPA_PM25_2018)
+summary(EPA_PM25_2019)
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -63,14 +54,14 @@ EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw
 
 ```{r}
 #3
-EPA_03_2018$Date <- as.Date(EPA_03_2018$Date, "%m/%d/%y") 
-EPA_03_2019$Date <- as.Date(EPA_03_2019$Date, "%m/%d/%y") 
-EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date, "%m/%d/%y") 
-EPA_PM25_2019$Date <- as.Date(EPA_PM25_2019$Date, "%m/%d/%y") 
+EPA_O3_2018$Date <- as.Date(EPA_O3_2018$Date, "%m/%d/%Y") 
+EPA_O3_2019$Date <- as.Date(EPA_O3_2019$Date, "%m/%d/%Y") 
+EPA_PM25_2018$Date <- as.Date(EPA_PM25_2018$Date, "%m/%d/%Y") 
+EPA_PM25_2019$Date <- as.Date(EPA_PM25_2019$Date, "%m/%d/%Y") 
 
 #4
-EPA_03_2018_S <- select(EPA_03_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPA_03_2019_S <- select(EPA_03_2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA_O3_2018_S <- select(EPA_O3_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPA_O3_2019_S <- select(EPA_O3_2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA_PM25_2018_s <- select(EPA_PM25_2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPA_PM25_2019_s <- select(EPA_PM25_2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
@@ -79,10 +70,11 @@ EPA_PM25_2018_s$AQS_PARAMETER_DESC <- 'PM2.5'
 EPA_PM25_2019_s$AQS_PARAMETER_DESC <- 'PM2.5' 
 
 #6
-write.csv(EPA_03_2018_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_processed.csv")
-write.csv(EPA_03_2019_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_processed.csv")
+write.csv(EPA_O3_2018_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2018_processed.csv")
+write.csv(EPA_O3_2019_S, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_NC2019_processed.csv")
 write.csv(EPA_PM25_2018_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2018_processed.csv")
 write.csv(EPA_PM25_2019_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_processed.csv")
+
 
 ```
 
@@ -108,11 +100,9 @@ write.csv(EPA_PM25_2019_s, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/E
 library(dplyr)
 library(lubridate)
 
-
-
 #7
 EPA_data <- 
-  rbind(EPA_03_2018_S, EPA_03_2019_S, EPA_PM25_2018_s, EPA_PM25_2019_s)
+  rbind(EPA_O3_2018_S, EPA_O3_2019_S, EPA_PM25_2018_s, EPA_PM25_2019_s)
 
 #8 
 EPA_data_2 <- 
@@ -121,36 +111,22 @@ EPA_data_2 <-
   group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>% 
   summarise(meanaqi = mean(DAILY_AQI_VALUE), 
             meanlat = mean(SITE_LATITUDE), 
-            meanlog = mean(SITE_LONGITUDE), 
-            .groups = "keep")
- print(EPA_data_2)
+            meanlog = mean(SITE_LONGITUDE),
+            .groups = "keep") %>%
+   mutate (Year = year(Date), Month = month(Date))
+print(EPA_data_2)
  
-  #mutate(EPA_data_2, Year = year(EPA_data_2$Date), Month = month(EPA_data_2$Date)) %>%
-  print(EPA_data_2)
-
-EPA_data_3 <- EPA_data_2
-
-
-  filter(!is.na(DAILY_AQI_VALUE) & !is.na(SITE_LATITUDE) & !is.na(SITE_LONGITUDE))
-  summarise(meanaqi = mean(DAILY_AQI_VALUE), 
-            meanlat = mean(SITE_LATITUDE), 
-            meanlog = mean(SITE_LONGITUDE), 
-            )
-
-#
-
-
-
-
-#? common factor levels?
-
-
-
 #9
+EPA_data_3 <- 
+  EPA_data_2 %>% 
+  pivot_wider(names_from = 'AQS_PARAMETER_DESC', values_from = 'meanaqi')
+print(EPA_data_3)
 
 #10
+dim(EPA_data_3)
 
 #11
+write.csv(EPA_data_3, row.names = FALSE, file = "E:/EDA-Fall2022/Data/Raw/EPAair_O3_PM25_NC1718_Processed.csv")
 
 ```
 
@@ -162,13 +138,24 @@ EPA_data_3 <- EPA_data_2
 
 ```{r}
 #12a
-
+EPA_data_summary <-
+  EPA_data_3 %>%
+  group_by(Site.Name, Month, Year) %>%
+  summarise(meanaqi_pm = mean(PM2.5),
+            meanaqi_o3 = mean(Ozone),
+            .groups = "keep")
+print(EPA_data_summary)
+            
 #12b
+EPA_data_summary_2 <- drop_na(EPA_data_summary)
+print(EPA_data_summary_2)
 
 #13
-
+dim(EPA_data_summary_2)
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
 > Answer: 
+drop_na() drops rows where any column specified by ... contains a missing value.
+na.omit returns the object with incomplete cases removed.
