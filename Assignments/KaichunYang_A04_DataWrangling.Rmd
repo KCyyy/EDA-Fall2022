@@ -40,6 +40,7 @@ EPA_PM25_2019 = read.csv(file = 'E:/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2019_raw
 2. Explore the dimensions, column names, and structure of the datasets. 
 
 ```{r,warning = FALSE, message = FALSE}
+#summary can give us enough information of the datasets
 summary(EPA_O3_2018)
 summary(EPA_O3_2019)
 summary(EPA_PM25_2018)
@@ -157,5 +158,4 @@ dim(EPA_data_summary_2)
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
 > Answer: 
-drop_na() drops rows where any column specified by ... contains a missing value.
-na.omit returns the object with incomplete cases removed.
+na.omit command is designed to omit rows based on all columns of a data object.
