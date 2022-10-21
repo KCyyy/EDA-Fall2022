@@ -9,10 +9,12 @@ editor_options:
 ---
 
 ## Objectives
-1. Apply special cases of the GLM (ANOVA) to real datasets
-2. Interpret and report the results of ANOVA in publication-style formats
+
+1.  Apply special cases of the GLM (ANOVA) to real datasets
+2.  Interpret and report the results of ANOVA in publication-style formats
 
 ## Set up
+
 ```{r, message = FALSE}
 getwd()
 library(tidyverse)
@@ -32,9 +34,11 @@ theme_set(mytheme)
 ```
 
 ### One-way ANOVA
+
 A one-way ANOVA is used when you have one categorical explanatory variable with more than two categories. In R, we can run the model with the function `lm` or `aov`, the latter of which will allow us to run post-hoc tests to determine pairwise differences.
 
 For example: Does total litter biomass differ among sites at the Niwot Ridge LTER?
+
 ```{r}
 # Wrangle the data
 Litter.Totals <- Litter %>%
@@ -110,14 +114,14 @@ print(Litter.Totals.plot)
 
 What information does the output give us? How might we report this information in a report?
 
-> 
-
 ## TWO-WAY ANOVA
 
 ### Main effects
-A two-way ANOVA allows us to examine the effects of two categorical explanatory variables on a continuous response variable. 
+
+A two-way ANOVA allows us to examine the effects of two categorical explanatory variables on a continuous response variable.
 
 For example: What if we wanted to know how litter masses varied across functional groups and land cover class?
+
 ```{r}
 # Format as aov
 Litter.anova.2way <- aov(data = Litter, dryMass ~ functionalGroup + nlcdClass)
@@ -172,4 +176,3 @@ Litter.anova.plot <- ggplot(Litter, aes(y = dryMass, x = nlcdClass, color = func
 print(Litter.anova.plot)
 
 ```
-

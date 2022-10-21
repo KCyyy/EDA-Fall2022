@@ -91,7 +91,7 @@ present and that graph axes are aligned.
 Tip: R has a build in variable called `month.abb` that returns a list of months;
 see <https://r-lang.com/month-abb-in-r-with-example>
 
-```{r p7, fig.width = 12, fig.asp = .5}
+```{r p7, fig.width = 8, fig.height = 8}
 #5
 
 # p <- ggplot(ntl, lakename = 'group')
