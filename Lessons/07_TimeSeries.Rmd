@@ -28,7 +28,7 @@ library(zoo)
 #install.packages("Kendall")
 library(Kendall)
 #install.packages("tseries")
-library(tseries)
+
 
 # Set theme
 mytheme <- theme_classic(base_size = 14) +
