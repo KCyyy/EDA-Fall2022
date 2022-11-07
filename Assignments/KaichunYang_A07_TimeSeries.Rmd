@@ -189,7 +189,7 @@ p2 +
 
 14. To accompany your graph, summarize your results in context of the research question. Include output from the statistical test in parentheses at the end of your sentence. Feel free to use multiple sentences in your interpretation.
 
-> Answer: The trend is decreasing over time, we can see that from either the plot or the test result.
+> Answer: The trend is decreasing over time, we can see that from either the plot or the test result. 2-sided p value is 0.046724, the null hypothesis is rejected so the ozone concentration is changing.
 
 
 15. Subtract the seasonal component from the `GaringerOzone.monthly.ts`. Hint: Look at how we extracted the series components for the EnoDischarge on the lesson Rmd file.
@@ -219,5 +219,6 @@ summary(nonseasonal.trend)
 
 > Answer: 
 Score is lower, -1179 < -77, var is higher 194365 > 1499, denominator is higher 7139 > 539, tau valuse is lower -0.165 < -0.143,
-2-sided p value is lower 0.0075402 < 0.046724
+2-sided p value is lower 0.0075402 < 0.046724, and still less than 0.05 so the null hypothesis is rejected. 
+
 
