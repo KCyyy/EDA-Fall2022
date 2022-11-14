@@ -198,6 +198,8 @@ Up next we will do some spatial analysis with our data. To prepare for this, we 
 #20 Transform the counties and gage location datasets to UTM Zone 14
 county_UTM14N <- st_transform(county, crs = 32614)
 gage_ht_UTM14N <- st_transform(gage_ht_nadrop, crs =32614)
+st_crs(county_UTM14N)
+st_crs(gage_ht_UTM14N)
 
 #21 Plot the data
 mapview(county_UTM14N, col.regions = '#80CBF3') + 
@@ -219,13 +221,34 @@ Now let's zoom into a particular county and examine the gages located there.
 
 ```{r}
 #22 Select the county
+Lan_1 <- filter(county, NAME == 'Lancaster')
+Lan_2 <- county$NAME[Lancaster,]
 
+# map0 = ggplot() + 
+#   geom_sf(data = Lan)
+# map0
+# 
+# Lan_centroids <- st_centroid(Lan)
+# map1 <- map0 + geom_sf(data = Lan_centroids, color = 'blue')
+# map1
+# 
+# Lan_centroids_2km <- st_buffer(Lan_centroids, 2000)
+# map2 <- map1 + geom_sf(data = Lan_centroids_2km, color = 'orange', fill=NA)
+# map2
+# 
+# Lan_in2km <- st_buffer(Lan, -2000)
+# map3 <- map0 + geom_sf(data = Lan_in2km, color = 'green', fill=NA)
+# map3
 
 #23 Select gages within the selected county
+gage_ht_Lan <- gage_ht_nadrop %>%
+  filter(st_intersects(x = ., y = Lan, sparse = FALSE))
 
+mapview(gage_ht_Lan)
 
 #24 Plot
-
-
-
+map = mapview(county, color = 'blue') +
+  mapview(gage_ht_Lan, zcol = 'gage_ht') + 
+  mapview(Lan, color = 'red')
+map
 ```
