@@ -1,6 +1,6 @@
 ---
 title: 'Assignment 8: Spatial Analysis in R'
-author: "Student Name"
+author: Kaichun Yang
 output:
   html_document:
     df_print: paged
@@ -222,33 +222,17 @@ Now let's zoom into a particular county and examine the gages located there.
 ```{r}
 #22 Select the county
 Lan_1 <- filter(county, NAME == 'Lancaster')
-Lan_2 <- county$NAME[Lancaster,]
-
-# map0 = ggplot() + 
-#   geom_sf(data = Lan)
-# map0
-# 
-# Lan_centroids <- st_centroid(Lan)
-# map1 <- map0 + geom_sf(data = Lan_centroids, color = 'blue')
-# map1
-# 
-# Lan_centroids_2km <- st_buffer(Lan_centroids, 2000)
-# map2 <- map1 + geom_sf(data = Lan_centroids_2km, color = 'orange', fill=NA)
-# map2
-# 
-# Lan_in2km <- st_buffer(Lan, -2000)
-# map3 <- map0 + geom_sf(data = Lan_in2km, color = 'green', fill=NA)
-# map3
 
 #23 Select gages within the selected county
-gage_ht_Lan <- gage_ht_nadrop %>%
-  filter(st_intersects(x = ., y = Lan, sparse = FALSE))
 
-mapview(gage_ht_Lan)
+#gage_ht_Lan_2 <- st_intersection(Lan_1, gage_ht_nadrop)
+#mapview(gage_ht_Lan)
+gage_ht_Lan <- gage_ht_nadrop %>%
+  filter(st_intersects(x = ., y = Lan_1, sparse = FALSE))
 
 #24 Plot
 map = mapview(county, color = 'blue') +
   mapview(gage_ht_Lan, zcol = 'gage_ht') + 
-  mapview(Lan, color = 'red')
+  mapview(Lan_1, color = 'red')
 map
 ```
